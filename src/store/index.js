@@ -14,7 +14,7 @@ function initialState(){
 }
 
 const vuexLocal = new VuexPersistence({
-    storage: window.localStorage
+    storage: window.sessionStorage
 })
 
 const store = createStore({

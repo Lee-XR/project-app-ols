@@ -46,7 +46,7 @@
                                 {{ slide.description }}
                             </p>
                             <p class="group-hover:text-secondary mt-1 underline text-center tracking-widest">
-                                <a :href="slide.link" target="_blank" class="hover:text-tertiary">Watch</a>
+                                <a :href="slide.link" target="_blank" class="hover:text-tertiary">Watch Now</a>
                             </p>                                
                         </div>
                     </li>
