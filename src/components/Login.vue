@@ -74,9 +74,7 @@ export default{
                 'password': password.value
             }
             loginError.value = false
-            await axios.post('http://localhost:80/scripts/login.php', data, {
-                withCredentials:true
-            })
+            await axios.post('login.php', data)
                 .then((response) => {
                     if(response.data.error){
                         errorMsg.value = response.data.msg

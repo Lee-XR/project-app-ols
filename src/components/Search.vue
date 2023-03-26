@@ -128,7 +128,7 @@
                       <b>{{ modalErrorMsg }}</b>
                   </div>
               </Transition>  
-              <button @click="download(resource.resourceId)" class="text-white flex justify-center items-center border-primary border-2 
+              <button @click="download(resource.resourceId, resource.title)" class="text-white flex justify-center items-center border-primary border-2 
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-download" class="h-5 w-5 mr-2"/>
@@ -178,9 +178,8 @@ export default {
 
       // Async GET script to fetch search results
       const getSearch = async (keywords) => {
-        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords 
+        await axios.get('search.php?keywords=' + keywords 
                         + '&userId=' + store.state.userId, {
-          withCredentials: true,
           headers:{ 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .then((response)=>{
@@ -207,34 +206,35 @@ export default {
 
       // Async GET script to download resource
       const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob'
             })
             .then((response) => {
-                const isApp = response.headers.get('Content-Type')?.includes('application')
-                if(isApp){
-                    const href = window.URL.createObjectURL(response.data)
-                    const link = document.createElement('a')
-                    link.href = href
-                    link.setAttribute('download', title)
-                    document.body.appendChild(link)
-                    link.click()
+              const isApp = response.headers.get('Content-Type')?.includes('application')
+              if(isApp){
+                const ext = response.headers.get('Content-Type').split("/").pop()
+                const href = window.URL.createObjectURL(response.data)
+                const link = document.createElement('a')
+                link.href = href
+                link.target = '_blank'
+                link.setAttribute('download', title + '.' + ext)
+                document.body.appendChild(link)
+                link.click()
 
-                    document.body.removeChild(link)
-                    URL.revokeObjectURL(href)
-                } else {
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                        const result = JSON.parse(reader.result)
-                        modalError.value = result.error
-                        modalErrorMsg.value = result.msg
-                    }
-                    reader.readAsText(response.data)
-                    setTimeout(() => {
-                        modalError.value = !modalError.value
-                    }, 5000)
+                document.body.removeChild(link)
+                URL.revokeObjectURL(href)
+              } else {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    const result = JSON.parse(reader.result)
+                    modalError.value = result.error
+                    modalErrorMsg.value = result.msg
                 }
+                reader.readAsText(response.data)
+                setTimeout(() => {
+                    modalError.value = !modalError.value
+                }, 5000)
+              }
             })
             .catch((error) => {
                 modalError.value = true
@@ -258,8 +258,7 @@ export default {
                 'userId': store.state.userId,
                 'resourceId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true,
+            await axios.post('/bookmark.php', data, {
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }

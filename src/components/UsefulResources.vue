@@ -98,17 +98,17 @@ export default {
 
         // Async GET script to download resource
         const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob'
             })
             .then((response) => {
                 const isApp = response.headers.get('Content-Type')?.includes('application')
                 if(isApp){
+                    const ext = response.headers.get('Content-Type').split("/").pop()
                     const href = window.URL.createObjectURL(response.data)
                     const link = document.createElement('a')
                     link.href = href
-                    link.setAttribute('download', title)
+                    link.setAttribute('download', title + '.' + ext)
                     document.body.appendChild(link)
                     link.click()
 
@@ -149,11 +149,8 @@ export default {
                 'userId': store.state.userId,
                 'resourceId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true,
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            await axios.post('bookmark.php', data, {
+                headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
                 if(response.data.error == true){

@@ -39,22 +39,22 @@
   import ProfileVue from '@/components/Profile.vue';
   import BookmarkVue from '@/components/Bookmark.vue';
   import ScrollTopBtn from '@/components/ScrollTopBtn.vue';
-  import { onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useStore } from 'vuex';
+  // import { onMounted } from 'vue';
+  // import { useRouter } from 'vue-router';
+  // import { useStore } from 'vuex';
 
   export default {
-      name: 'ProfileView',
-      components: { HeaderVue, FooterVue, searchBarVue, ProfileVue, BookmarkVue, ScrollTopBtn },
+    name: 'ProfileView',
+    components: { HeaderVue, FooterVue, searchBarVue, ProfileVue, BookmarkVue, ScrollTopBtn },
     setup(){
-      const router = useRouter()
-      const store = useStore()
+      // const router = useRouter()
+      // const store = useStore()
 
-      onMounted(() => {
-      if(store.state.userId === null){
-        router.push('/login')
-      }
-    })
+      // onMounted(() => {
+      //   if(store.state.userId === null){
+      //     router.push('/login')
+      //   }
+      // })
     }
   }
   </script>

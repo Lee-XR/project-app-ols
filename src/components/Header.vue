@@ -107,8 +107,7 @@ export default {
 
         const logout = async () => {
           const data = {'userId': store.state.userId}
-          await axios.post('http://localhost:80/scripts/logout.php', data, {
-            withCredentials: true,
+          await axios.post('logout.php', data, {
             headers:{
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

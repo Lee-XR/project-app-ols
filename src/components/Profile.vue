@@ -209,8 +209,7 @@ export default {
                 formData.append('changePic', false)
             }
 
-            await axios.post('http://localhost:80/scripts/editProfile.php', formData, {
-                withCredentials: true,
+            await axios.post('editProfile.php', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
             .then((response) => {

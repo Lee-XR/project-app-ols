@@ -44,9 +44,9 @@ import searchBarVue from '@/components/searchBar.vue';
 import BrowseVue from '@/components/Browse.vue';
 import ResultVue from '@/components/Result.vue';
 import ScrollTopBtn from '@/components/ScrollTopBtn.vue';
-import { ref, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { ref, watch } from 'vue';
+// import { useRouter } from 'vue-router';
+// import { useStore } from 'vuex';
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
@@ -57,14 +57,14 @@ export default {
     const result = ref(false)
     const resultOption = ref(null)
     const resultId = ref(null)
-    const router = useRouter()
-    const store = useStore()
+    // const router = useRouter()
+    // const store = useStore()
 
-    onMounted(() => {
-      if(store.state.userId === null){
-        router.push('/login')
-      }
-    })
+    // onMounted(() => {
+    //   if(store.state.userId === null){
+    //     router.push('/login')
+    //   }
+    // })
 
     gsap.registerPlugin(ScrollToPlugin)
     watch(result, () => {

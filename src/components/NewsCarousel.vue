@@ -131,8 +131,14 @@ export default {
             }
         }
 
+        // New Axios instance config to fetch RSS data
+        const getNewsInstance = axios.create({
+            baseURL: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.malaymail.com%2Ffeed%2Frss%2Fmalaysia',
+            withCredentials: false,
+        })
+
         const getNews = async () => {
-            await axios.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.malaymail.com%2Ffeed%2Frss%2Fmalaysia')
+            await getNewsInstance.get('')
             .then((response) => {
                 const items = response.data.items
                 for (const i in items){

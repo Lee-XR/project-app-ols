@@ -117,9 +117,7 @@ export default{
                 'gender': gender.value,
                 'grade': grade.value
             }
-            await axios.post('http://localhost:80/scripts/register.php', data, {
-                withCredentials: true
-            })
+            await axios.post('register.php', data)
             .then((response) => {
                 if(response.data.error === true){
                     errorMsg.value = response.data.msg
