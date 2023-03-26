@@ -1,6 +1,10 @@
 import { createStore } from "vuex"
 import VuexPersistence from "vuex-persist"
 
+const vuexLocal = new VuexPersistence({
+    storage: window.sessionStorage
+})
+
 function initialState(){
     return {
         userId: null,
@@ -12,10 +16,6 @@ function initialState(){
         userProfilePic: null
     }
 }
-
-const vuexLocal = new VuexPersistence({
-    storage: window.sessionStorage
-})
 
 const store = createStore({
     state: initialState(),

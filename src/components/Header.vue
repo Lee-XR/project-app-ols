@@ -1,6 +1,6 @@
 <template>
-  <div class="sticky top-0 w-full bg-white dark:bg-gray-700 shadow-md z-50 
-              transition duration-100 ease-in-out">
+  <div class="sticky top-0 w-full bg-white dark:bg-gray-700 
+  shadow-md z-50 transition duration-100 ease-in-out">
     <Transition mode="out-in"
         enter-active-class="duration-100 ease-in-out"
         enter-from-class="-translate-x-full"
@@ -11,15 +11,15 @@
     
     <div class="flex flex-row justify-between items-center px-5 py-5">
 
-      <!-- Menu button -->
-      <div class="flex flex-row justify-center items-center">
-        <button @click="openNav" 
-        class="bg-primary rounded-full w-10 h-10 flex flex-col justify-center border-2 border-primary 
-              text-white drop-shadow-md peer
-              hover:bg-white hover:text-primary hover:scale-x-105">
-            <font-awesome-icon v-if="!toggleNav" icon="fa-solid fa-bars" class="h-5 mx-auto"/>
-            <font-awesome-icon v-else icon="fa-solid fa-xmark" class="h-6 mx-auto"/>
-        </button>
+    <!-- Menu button -->
+    <div class="flex flex-row justify-center items-center">
+      <button @click="openNav" 
+      class="bg-primary rounded-full w-10 h-10 flex flex-col justify-center border-2 
+            border-primary text-white drop-shadow-md peer
+            hover:bg-white hover:text-primary hover:scale-x-105">
+          <font-awesome-icon v-if="!toggleNav" icon="fa-solid fa-bars" class="h-5 mx-auto"/>
+          <font-awesome-icon v-else icon="fa-solid fa-xmark" class="h-6 mx-auto"/>
+      </button>
         <div ref="menu" class="uppercase text-3xl px-4 py-1 drop-shadow-lg rounded-r-full 
         -translate-x-1 opacity-0 transition ease-in-out duration-300 
         peer-hover:opacity-100 peer-hover:translate-x-2 peer-hover:bg-gradient-to-r peer-hover:from-transparent 

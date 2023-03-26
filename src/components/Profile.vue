@@ -5,8 +5,8 @@
         enter-active-class="duration-500 delay-300 ease-in-out"
         enter-from-class="opacity-0 translate-y-10">
             <div class="col-span-1 h-80 w-1/4 rounded-[50%] overflow-hidden border-4 border-primary dark:border-secondary">
-                <img v-if="noPic" src="http://localhost:80/scripts/profilePics/default profile.jpg" alt="default profile" class="h-full w-full object-cover">
-                <img v-else :src="userInfo.user_profilePic" alt="" class="h-full w-full object-cover">
+                <img v-if="noPic" src="http://localhost:80/scripts/profilePics/default%20profile.jpg" alt="default profile" class="h-full w-full object-cover">
+                <img v-else :src="'http://localhost:80/scripts/profilePics/' + userInfo.user_profilePic" alt="" class="h-full w-full object-cover">
             </div>
         </Transition>
 
@@ -176,13 +176,12 @@ export default {
                 'user_dob': store.state.userDob,
                 'user_gender': store.state.userGender,
                 'user_grade': store.state.userGrade,
+                'user_profilePic': store.state.userProfilePic
             }
             if(store.state.userProfilePic === null){
                 noPic.value = true
             } else {
-                noPic.value = false
-                userInfo.value.user_profilePic = 'http://localhost:80/scripts/profilePics/' + 
-                                                    store.state.userProfilePic
+                noPic.value = false 
             }
         }
 

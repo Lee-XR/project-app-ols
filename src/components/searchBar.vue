@@ -68,7 +68,7 @@
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                    <p>Bookmark</p>
+                    <p>Add Bookmark</p>
                 </button>
             </div>
         </div>
@@ -97,37 +97,35 @@ export default {
         const store = useStore()
         const router = useRouter()
 
-        const getSearch = async (keywords) => {
-        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
-          withCredentials: true,
-          headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-        })
-        .then((response)=>{
-          resources.value = []
-          if(response.data.resources.length > 0){
-            const resource = response.data.resources
-            for(const i in resource){
-              resources.value.push(resource[i])
-            }
-            resultHit.value = true
-          } else {
-            resultHit.value = false
-          }
-        })
-        .catch((error) => {
-            if(error.response.status === 401){
-                router.push('/login')
-            }
-        })
-      }
+watch(search, (keywords) => {
+    if(search.value){
+    getSearch(keywords)
+    }
+})
 
-      watch(search, (keywords)=>{
-        if(search.value){
-          getSearch(keywords)
+const getSearch = async (keywords) => {
+    await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
+        withCredentials: true,
+        headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+    }).then((response) => {
+        resources.value = []
+        if(response.data.resources.length > 0){
+        const resource = response.data.resources
+        for(const i in resource){
+            resources.value.push(resource[i])
         }
-      })
+        resultHit.value = true
+        } else {
+        resultHit.value = false
+        }
+    }).catch((error) => {
+        if(error.response.status === 401){
+            router.push('/login')
+        }
+    })
+}
 
       const show = (selected) => {
         resource.value = selected

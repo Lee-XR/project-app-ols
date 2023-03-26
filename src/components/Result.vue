@@ -109,7 +109,7 @@
                     rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                     hover:bg-white hover:scale-110">
                         <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                        <p>Bookmark</p>
+                        <p>Add Bookmark</p>
                     </button>
                 </div>
             </div>

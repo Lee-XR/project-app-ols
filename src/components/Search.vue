@@ -3,12 +3,9 @@
       <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/020-B2S-Blog_2-Families-SL-v2.gif" alt="" class="w-full h-[31rem] object-cover dark:brightness-75 transition duration-100 ease-in-out">
       <div class="absolute top-0 w-full h-full bg-gray-400 bg-opacity-30 px-48 py-7 transition duration-100 ease-in-out">
           <div class="flex flex-col justify-center">
-              <p class="text-7xl text-center dark:text-gray-800 my-3 tracking-wider"><b>Study-UP</b></p>
-              <p class="text-lg text-center mt-3 mb-10 text-primary"><b>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. Nam tristique enim elit, ut lacinia elit gravida nec. Suspendisse vehicula odio ut enim
-                  pharetra maximus. Nam pretium egestas nibh eget tincidunt. Nulla mi nunc, commodo non laoreet quis,
-                  lobortis at massa. Mauris tellus nulla, placerat at nulla non.
+              <p class="text-7xl text-center dark:text-gray-100 my-3 tracking-wider"><b>Study-UP</b></p>
+              <p class="text-lg text-center mt-3 mb-5 dark:text-gray-100"><b>
+                  Enhance your academic learning experience with Study-UP, an online library system web platform for Malaysian students. Looking for a specific topic to complete your homework or assignment? Just use the search bar below... Or browse for more interesting resources through our page. Are you ready to acheive academic excellence with Study-UP?
               </b></p>
 
               <!-- Search bar -->
@@ -38,7 +35,7 @@
               </div>
 
               <div class="my-3 mx-auto w-full">
-                <p class="text-lg text-center text-gray-100 dark:text-gray-200 tracking-wider my-2 font-semibold">
+                <p class="text-lg text-center text-black dark:text-gray-100 tracking-wider my-2 font-semibold">
                   <i>Not what you are looking for?</i>
                 </p>
                 <div class="flex justify-center items-center text-lg text-white w-1/4 mx-auto px-3 py-1
@@ -53,12 +50,14 @@
           </div>
 
           <!-- Bouncing down button -->
-        <div class="absolute -bottom-6 left-0 right-0 text-center animate-bounce">
-          <button @click="$emit('scrollNext')" class="w-12 h-12 rounded-full bg-primary border-2 border-primary transition
-          duration-150 ease-in-out text-white hover:text-primary hover:bg-white hover:scale-105">
-            <font-awesome-icon icon="fa-solid fa-down-long" class="mx-auto w-8 h-8 hover:scale-105" />
-          </button>
-        </div>
+          <div class="absolute -bottom-6 left-0 right-0 text-center animate-bounce">
+            <button @click="$emit('scrollNext')" class="w-12 h-12 rounded-full bg-primary 
+            border-2 border-primary transition duration-150 ease-in-out text-white 
+            hover:text-primary hover:bg-white hover:scale-105">
+              <font-awesome-icon icon="fa-solid fa-down-long" class="mx-auto w-8 h-8 
+              hover:scale-105" />
+            </button>
+          </div>
 
       </div>
     </div>
@@ -139,7 +138,7 @@
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                    <p>Bookmark</p>
+                    <p>Add Bookmark</p>
                 </button>
             </div>
           </div>
@@ -171,13 +170,18 @@ export default {
       const store = useStore()
       const router = useRouter()
 
+      watch(search, (keywords)=>{
+        if(search.value){
+          getSearch(keywords)
+        }
+      })
+
       // Async GET script to fetch search results
       const getSearch = async (keywords) => {
-        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
+        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords 
+                        + '&userId=' + store.state.userId, {
           withCredentials: true,
-          headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+          headers:{ 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .then((response)=>{
           resources.value = []
@@ -192,17 +196,9 @@ export default {
           }
         })
         .catch((error) => {
-          if(error.response.status === 401){
-            router.push('/login')
-          }
+          if(error.response.status === 401) router.push('/login')
         })
       }
-
-      watch(search, (keywords)=>{
-        if(search.value){
-          getSearch(keywords)
-        }
-      })
 
       const show = (selected) => {
         resource.value = selected
@@ -302,6 +298,7 @@ export default {
         rootMargin: '-80px 0px 0px 0px',
         threshold: [1]
       }
+
       const observer1 = new IntersectionObserver(([entry]) => {
         if(entry.isIntersecting){
             this.stickySearch = false

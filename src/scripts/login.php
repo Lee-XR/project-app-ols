@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] ."");
-header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization");
+header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Origin, 
+        X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization");
 header("Access-Control-Allow-Credentials: true");
 use Firebase\JWT\JWT;
 require_once('vendor/autoload.php');
@@ -81,9 +82,7 @@ if($hasValidCredentials){
     ];
 
     $token = JWT::encode($requestData, $secretKey, 'HS512');
-
-    $refresh = JWT::encode($refreshData, $secretKey, 'HS512');
-
+    $refresh = JWT::encode($refreshData, $secretKey, 'HS512');  
     setcookie('token', $token, time()+60*10, "/", "localhost", true, true);
     setcookie('refresh', $refresh, time()+60*60*24*10, "/", "localhost", true, true);
 

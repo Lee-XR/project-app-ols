@@ -53,7 +53,6 @@ export default{
         })
 
         gsap.registerPlugin(MotionPathPlugin)
-
         const needRegister = (register) => {
             if(register){
                 slide.value.classList.remove('right-0')

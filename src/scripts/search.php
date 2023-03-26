@@ -24,7 +24,7 @@ if ($token->iss != $serverName ||
     $token->userId != $_GET['userId']){
         header('HTTP/1.0 401 Unauthorized');
         exit;
-    }
+}
 
 $return = array();
 

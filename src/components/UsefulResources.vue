@@ -66,7 +66,7 @@
                     rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                     hover:bg-white hover:scale-110">
                         <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                        <p>Bookmark</p>
+                        <p>Add Bookmark</p>
                     </button>
                 </div>
             </div>
@@ -98,7 +98,7 @@ export default {
 
         // Async GET script to download resource
         const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id, {
+            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
                 withCredentials: true,
                 responseType: 'blob'
             })
@@ -150,10 +150,13 @@ export default {
                 'resourceId': id
             }
             await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true
+                withCredentials: true,
+                headers:{
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             })
             .then((response) => {
-                if(response.data.error){
+                if(response.data.error == true){
                     modalError.value = true
                     modalErrorMsg.value = response.data.errorMsg
                     setTimeout(() => {
