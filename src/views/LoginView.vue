@@ -55,10 +55,6 @@ export default{
         gsap.registerPlugin(MotionPathPlugin)
         const needRegister = (register) => {
             if(register){
-                // slide.value.classList.remove('right-0')
-                // slide.value.classList.add('left-0')
-                // row.value.classList.remove('justify-start')
-                // row.value.classList.add('justify-end')
                 gsap.to('#slide', {
                     motionPath: {
                         path: [{x: x.value.right}, {x: x.value.left}],
@@ -75,10 +71,6 @@ export default{
                 row.value.classList.remove('justify-start')
                 row.value.classList.add('justify-end')
             } else {
-                // slide.value.classList.remove('left-0')
-                // slide.value.classList.add('right-0')
-                // row.value.classList.remove('justify-end')
-                // row.value.classList.add('justify-start')
                 gsap.to('#slide', {
                     motionPath: {
                         path: [{x: x.value.left}, {x: x.value.right-(x.value.width/2)}],

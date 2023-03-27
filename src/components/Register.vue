@@ -1,5 +1,5 @@
 <template>
-    <div class="border-2 border-black flex flex-col justify-center px-10 py-3 w-1/2 h-full relative dark:text-gray-200">
+    <div class="flex flex-col justify-center px-10 py-3 w-1/2 h-full relative dark:text-gray-200">
         <div class="flex flex-row justify-start items-baseline relative">
 
             <!-- Back to login button -->
@@ -13,7 +13,7 @@
                 <h1 class="text-5xl"><b>REGISTER</b></h1>
             </div>
         </div>
-        <p class="mx-auto my-5 text-center">Enter your <b>personal details</b> to register your account
+        <p class="mx-auto my-5 text-left">Enter your <b>personal details</b> to register your account
         </p>
 
         <!-- Register input form -->
@@ -33,13 +33,13 @@
                 w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
                 <label class="absolute -top-3 left-4 bg-white dark:bg-gray-700 dark:text-gray-200">Password:</label>
             </div>
-            <div class="flex flex-row justify-start text-left">
-                <div>
+            <div class="flex flex-row justify-between text-left">
+                <div class="flex flex-col">
                 <label>D.O.B:</label>
                 <input type="date" v-model="dob" required class="border-2 border-slate-200 drop-shadow-md 
                 focus:outline-none focus:border-primary dark:bg-gray-700">
                 </div>
-                <div>
+                <div class="flex flex-col">
                     <label>Gender:</label>
                     <select v-model="gender" required class="mt-1 border-2 border-slate-200 drop-shadow-md 
                     focus:outline-none focus:border-primary dark:bg-gray-700">
@@ -47,7 +47,7 @@
                         <option value="F">Female</option>
                     </select>
                 </div>
-                <div>
+                <div class="flex flex-col">
                     <label>Grade:</label>
                     <select v-model="grade" required class="mt-1 border-2 border-slate-200 drop-shadow-md 
                     focus:outline-none focus:border-primary dark:bg-gray-700">
