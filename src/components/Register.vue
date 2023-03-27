@@ -33,7 +33,7 @@
                 w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
                 <label class="absolute -top-3 left-4 bg-white dark:bg-gray-700 dark:text-gray-200">Password:</label>
             </div>
-            <div class="w-full flex flex-row justify-center text-left">
+            <div class="flex flex-row justify-start text-left">
                 <div>
                 <label>D.O.B:</label>
                 <input type="date" v-model="dob" required class="border-2 border-slate-200 drop-shadow-md 

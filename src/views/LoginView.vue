@@ -3,20 +3,19 @@
     <div class="flex flex-col justify-center my-auto h-screen relative">
         <div class="bg-neutral-200 rounded-2xl h-5/6 mx-11 px-10 py-3 flex flex-col justify-center shadow-lg dark:bg-gray-500">
 
-            <div ref="row" class="bg-white rounded-2xl h-[95%] mx-20 my-5 px- relative shadow-2xl flex justify-start dark:bg-gray-700">
+            <div ref="row" class="bg-white rounded-2xl h-[95%] mx-20 my-5 relative shadow-2xl flex justify-start dark:bg-gray-700">
                 <Transition appear
                     enter-active-class="delay-300 duration-500 ease-in-out"
                     enter-from-class="scale-90 opacity-0"
                     leave-active-class=" duration-500 ease-in-out"
                     leave-to-class="scale-90 opacity-0">
-                        <LoginVue v-if="!show" @register="needRegister"></LoginVue>
-                        <RegisterVue v-else @register="needRegister"></RegisterVue>
+                        <LoginVue @register="needRegister"></LoginVue>
                 </Transition>
-                <!-- <Transition appear
+                <Transition appear
                     enter-active-class="delay-200 duration-500 ease-in-out"
                     enter-from-class="scale-90 opacity-0">
                     <RegisterVue @register="needRegister"></RegisterVue>
-                </Transition> -->
+                </Transition>
 
                 <!-- Sliding div -->
                 <div id="slide" ref="slide" class="absolute inset-y-0 my-auto right-0 w-1/2 py-10 h-screen rounded-2x border-2 border-opacity-80
