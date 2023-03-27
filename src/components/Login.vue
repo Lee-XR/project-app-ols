@@ -77,7 +77,7 @@ export default{
             // await axios.post('login.php', data)
             await fetch(process.env.VUE_APP_DEPLOY_URL + '/login.php', {
                 method: "POST",
-                mode: "cors",
+                // mode: "cors",
                 credentials: 'include',
                 body: JSON.stringify(data)
             })
