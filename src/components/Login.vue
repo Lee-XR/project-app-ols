@@ -8,7 +8,7 @@
         <!-- Login input form -->
         <form action="post">
             <div class="my-4 relative">
-                <input type="text" v-model="email" required class="border-2 border-slate-200 rounded-full w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
+                <input type="email" v-model="email" required class="border-2 border-slate-200 rounded-full w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
                 <label class="absolute -top-3 left-4 px-1 bg-white dark:bg-gray-700 dark:text-gray-200">Email:</label>
             </div>
             <div class="my-4 relative">

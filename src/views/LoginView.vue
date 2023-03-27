@@ -35,7 +35,7 @@
 <script>
 import LoginVue from '@/components/Login.vue'
 import RegisterVue from '@/components/Register.vue'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import gsap from 'gsap'
 import MotionPathPlugin from 'gsap/MotionPathPlugin'
 
@@ -48,12 +48,9 @@ export default{
         const row = ref()
         const x = ref()
 
-        onMounted(() => {
-            x.value = row.value.getBoundingClientRect()
-        })
-
         gsap.registerPlugin(MotionPathPlugin)
         const needRegister = (register) => {
+            x.value = row.value.getBoundingClientRect()
             if(register){
                 gsap.to('#slide', {
                     motionPath: {
@@ -76,8 +73,7 @@ export default{
                         path: [{x: x.value.left}, {x: x.value.right-(x.value.width/2)}],
                         align: [{x: x.value.x}],
                         alignOrigin: [0, 0.5],
-                        start: 0.17,
-                        // end: 0.475
+                        start: 0.2,
                         end: 1
                     },
                     duration: 0.6,
