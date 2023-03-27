@@ -13,7 +13,7 @@
             hover:shadow-2xl hover:border-2 hover:bg-white dark:bg-gray-500 
             dark:hover:bg-gray-400 dark:border-gray-200">
                 <div class="h-2/3 drop-shadow-lg">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="image" class="h-full w-full object-cover object-top dark:brightness-90">
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="image" class="h-full w-full object-cover object-top dark:brightness-90">
                 </div>
                 <div class="h-1/3 mt-1 p-2 flex flex-col justify-center">
                     <h2 class="text-2xl w-full leading-tight text-center font-semibold dark:text-gray-200">
@@ -29,9 +29,7 @@
         <ModalVue :show="showModal" @click="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <!-- <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
-                    object-cover object-top"> -->
-                    <img :src="process.env.VUE_APP_DEPLOY_URL + resource.thumbnail" alt="" class="w-full h-full 
+                    <img :src="url + resource.thumbnail" alt="" class="w-full h-full 
                         object-cover object-top" />
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -86,6 +84,7 @@ export default {
     name: 'UsefulResourcesVue',
     components: { ModalVue },
     setup(){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const showModal = ref(false)
         const resource = ref()
         const modalError = ref(false)
@@ -247,7 +246,7 @@ export default {
             }
         ])
 
-        return { showModal, show, resource, resources, download, bookmark, modalError, modalErrorMsg }
+        return { url, showModal, show, resource, resources, download, bookmark, modalError, modalErrorMsg }
     }
 }
 </script>

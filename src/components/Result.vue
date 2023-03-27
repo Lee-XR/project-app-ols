@@ -40,7 +40,7 @@
             hover:cursor-default hover:scale-105 dark:text-gray-200 dark:bg-gray-700
             dark:hover:bg-gray-400 dark:hover:border-gray-200">
                 <div class="w-1/3 h-full mr-2 drop-shadow-md">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="image" class="w-full h-full object-cover object-top dark:brightness-90">
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="image" class="w-full h-full object-cover object-top dark:brightness-90">
                 </div>
                 <div class="w-2/3 h-full px-1 grid grid-cols-2 gap-x-3 items-center">
                     <div class="col-start-1 col-end-3 text-xl truncate">
@@ -71,7 +71,7 @@
         <ModalVue :show="showModal" @close="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                     object-cover object-top">
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -130,6 +130,7 @@ export default {
     components: { ModalVue },
     props: ['resultOption', 'resultId'],
     setup(props){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const currentTab = ref()
         const showModal = ref(false)
         const resources = ref([])
@@ -319,7 +320,7 @@ export default {
             el.style.transform = 'translateY(-20px)'
         }
 
-        return { tabs, currentTab, switchTab, getResults, showModal, show, resource, resources, option, id, hits, 
+        return { url, tabs, currentTab, switchTab, getResults, showModal, show, resource, resources, option, id, hits, 
                 connError, download, bookmark, modalError, modalErrorMsg, onBeforeEnter, onEnter, onLeave }
     },
     mounted(){

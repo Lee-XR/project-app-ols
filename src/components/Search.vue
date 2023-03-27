@@ -99,7 +99,7 @@
         <ModalVue :show="showModal" @close="showModal = false">
           <div class="w-full h-full">
             <div class="w-full h-2/5">
-                <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                 object-cover object-top">
             </div>
             <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -158,6 +158,7 @@ export default {
     emits: ["scrollNext"],
     components: { ModalVue },
     setup(){
+      const url = process.env.VUE_APP_DEPLOY_URL
       const search = ref(null)
       const stickySearch = ref(false)
       const resultHit = ref(false)
@@ -286,7 +287,7 @@ export default {
             })
         }
 
-      return { search, stickySearch, resultHit, getSearch, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
+      return { url, search, stickySearch, resultHit, getSearch, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
     },
     mounted(){
       const sBar = document.querySelector("#searchBar")
