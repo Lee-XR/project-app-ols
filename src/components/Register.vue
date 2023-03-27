@@ -118,15 +118,17 @@ export default{
                 'grade': grade.value
             }
             await axios.post('register.php', data)
+            await fetch(process.env.VUE_APP_DEPLOY_URL + '/register.php')
+            .then(res => { return res.json() })
             .then((response) => {
-                if(response.data.error === true){
-                    errorMsg.value = response.data.msg
+                if(response.error === true){
+                    errorMsg.value = response.msg
                     registerError.value = true
                     setTimeout(()=>{
                         registerError.value = false
                     }, 5000)
-                } else if(response.data.error === false) {
-                    store.commit('userExist', response.data)
+                } else if(response.error === false) {
+                    store.commit('userExist', response)
                     router.push('/')
                 }
             })
