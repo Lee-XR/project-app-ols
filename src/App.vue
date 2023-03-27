@@ -27,44 +27,44 @@ nav a.router-link-active .active div {
 </style>
 
 <script>
-// import axios from 'axios';
-// import { useRouter } from 'vue-router';
-// import { useStore } from 'vuex';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 
 export default {
   setup(){
-    // const router = useRouter()
-    // const store = useStore()
+    const router = useRouter()
+    const store = useStore()
 
     // Interceptor to redirect unauthorised users to login page
-    // axios.interceptors.response.use((response) => {
-    //   return response
-    // },
-    // async (error) => {
-    //   const originalRequest = error.config
-    //   if(error.response.status === 401){
-    //       store.commit('resetUser')
-    //       router.push('/login')
-    //       return Promise.reject(error)
-    //   } else if(error.response.status === 400){
-    //       const data = { 'userId': store.state.userId }
-    //       await axios.post('http://localhost:80/scripts/refresh.php', data, {
-    //         withCredentials: true,
-    //         headers:{
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         if(error){
-    //           store.commit('resetUser')
-    //           router.push('/login')
-    //         }
-    //       })
-    //       return axios(originalRequest)
-    //   }
-    //   return Promise.reject(error)
-    // })
+    axios.interceptors.response.use((response) => {
+      return response
+    },
+    async (error) => {
+      const originalRequest = error.config
+      if(error.response.status === 401){
+          store.commit('resetUser')
+          router.push('/login')
+          return Promise.reject(error)
+      } else if(error.response.status === 400){
+          const data = { 'userId': store.state.userId }
+          await axios.post('http://localhost:80/scripts/refresh.php', data, {
+            withCredentials: true,
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+          .catch((error) => {
+            if(error){
+              store.commit('resetUser')
+              router.push('/login')
+            }
+          })
+          return axios(originalRequest)
+      }
+      return Promise.reject(error)
+    })
   }
 }
 </script>
