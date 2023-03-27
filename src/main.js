@@ -18,5 +18,5 @@ library.add(faRightToBracket, faArrowRight, faPenToSquare, faArrowLeft, faBars, 
 
 createApp(App).use(router).use(store).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
 
-axios.defaults.baseURL = 'http://localhost:80/scripts/';
+axios.defaults.baseURL = process.env.VUE_APP_DEPLOY_URL;
 axios.defaults.withCredentials = true;
