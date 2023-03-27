@@ -81,11 +81,12 @@ export default{
                 // row.value.classList.add('justify-start')
                 gsap.to('#slide', {
                     motionPath: {
-                        path: [{x: x.value.left}, {x: x.value.right}],
+                        path: [{x: x.value.left}, {x: x.value.right-(x.value.width/2)}],
                         align: [{x: x.value.x}],
                         alignOrigin: [0, 0.5],
-                        start: 0.13,
-                        end: 0.475
+                        start: 0.17,
+                        // end: 0.475
+                        end: 1
                     },
                     duration: 0.6,
                     ease: 'power2.inOut'
