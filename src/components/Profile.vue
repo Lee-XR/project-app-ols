@@ -187,7 +187,6 @@ export default {
 
         const picUpload = (e) => {
             profilePic.value = e.target.files[0]
-            console.log(profilePic.value)
         }
 
         const editProfile = async () => {
@@ -209,7 +208,6 @@ export default {
             } else {
                 formData.append('changePic', false)
             }
-
             await axios.post('editProfile.php', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })

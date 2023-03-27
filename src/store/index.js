@@ -36,6 +36,7 @@ const store = createStore({
             state.userGender = payload.userGender,
             state.userGrade = payload.userGrade,
             state.userProfilePic = payload.userProfilePic
+            console.log(state)
         },
         resetUser(state){
             Object.assign(state, initialState())
