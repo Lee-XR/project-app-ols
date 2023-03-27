@@ -218,7 +218,7 @@ export default {
             .then((response) => {
                 const isApp = response.headers.get('Content-Type')?.includes('application')
                 if(isApp){
-                    const ext = response.headers.get('Contenty-Type').split("/").pop()
+                    const ext = response.headers.get('Content-Type').split("/").pop()
                     const href = window.URL.createObjectURL(response.data)
                     const link = document.createElement('a')
                     link.href = href
