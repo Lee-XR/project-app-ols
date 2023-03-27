@@ -1,21 +1,22 @@
 <template>
 <div class="relative">
     <div class="flex flex-col justify-center my-auto h-screen relative">
-        <div class="bg-neutral-200 rounded-2xl mx-11 px-10 py-3 shadow-lg dark:bg-gray-500">
+        <div class="bg-neutral-200 rounded-2xl mx-11 px-10 py-3 flex flex-col justify-center shadow-lg dark:bg-gray-500">
 
-            <div ref="row" class="bg-white rounded-2xl mx-20 my-5 relative shadow-2xl flex justify-start dark:bg-gray-700">
+            <div ref="row" class="bg-white rounded-2xl h-[95%] mx-20 my-5 relative shadow-2xl flex justify-start dark:bg-gray-700">
                 <Transition appear 
-                    enter-active-class="delay-200 duration-500 ease-in-out"
+                    enter-active-class="delay-200 duration-100 ease-in-out"
                     enter-from-class="scale-90 opacity-0"
-                    leave-active-class="delay-200 duration-500 ease-in-out"
+                    leave-active-class="delay-200 duration-100 ease-in-out"
                     leave-to-class="scale-90 opacity-0">
-                        <LoginVue @register="needRegister"></LoginVue>
+                        <LoginVue v-if="!show" @register="needRegister"></LoginVue>
+                        <RegisterVue v-else @register="needRegister"></RegisterVue>
                 </Transition>
-                <Transition appear
+                <!-- <Transition appear
                     enter-active-class="delay-200 duration-500 ease-in-out"
                     enter-from-class="scale-90 opacity-0">
                     <RegisterVue @register="needRegister"></RegisterVue>
-                </Transition>
+                </Transition> -->
 
                 <!-- Sliding div -->
                 <div id="slide" ref="slide" class="absolute inset-y-0 my-auto right-0 w-1/2 py-10 h-fit rounded-2x border-2 border-opacity-80
@@ -57,6 +58,8 @@ export default{
             if(register){
                 slide.value.classList.remove('right-0')
                 slide.value.classList.add('left-0')
+                row.value.classList.remove('justify-start')
+                row.value.classList.add('justify-end')
                 gsap.to('#slide', {
                     motionPath: {
                         path: [{x: x.value.right}, {x: x.value.left}],
@@ -71,6 +74,8 @@ export default{
             } else {
                 slide.value.classList.remove('left-0')
                 slide.value.classList.add('right-0')
+                row.value.classList.remove('justify-end')
+                row.value.classList.add('justify-start')
                 gsap.to('#slide', {
                     motionPath: {
                         path: [{x: x.value.left}, {x: x.value.right}],

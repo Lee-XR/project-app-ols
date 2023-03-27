@@ -29,8 +29,10 @@
         <ModalVue :show="showModal" @click="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
-                    object-cover object-top">
+                    <!-- <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                    object-cover object-top"> -->
+                    <img :src="process.env.VUE_APP_DEPLOY_URL + resource.thumbnail" alt="" class="w-full h-full 
+                        object-cover object-top" />
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
                 <div class="text-lg mt-1 mb-2">

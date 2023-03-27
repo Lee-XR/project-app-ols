@@ -1,9 +1,10 @@
 <template>
-    <div class="flex flex-col justify-center px-5 py-1  w-1/2 my-3 relative dark:text-gray-200">
-        <div class="flex flex-row justify-start items-baseline">
+    <div class="flex flex-col justify-center px-10 py-3 w-1/2 h-full my-3 relative dark:text-gray-200">
+        <div class="flex flex-row justify-start items-baseline relative">
 
             <!-- Back to login button -->
-            <button @click="$emit('register', false)" class="hover:text-primary 
+            <button @click="$emit('register', false)" class="
+            absolute top-8 -left-8 hover:text-primary 
             hover:scale-125 transition duration-100 ease-in-out focus:outline-none 
             focus:text-primary focus:scale-125">
                 <font-awesome-icon icon="fa-solid fa-arrow-left" class="h-7" />
