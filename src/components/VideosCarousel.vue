@@ -6,7 +6,7 @@
         </div>
         <!-- Carousel content -->
         <div class="mx-20 my-5">
-            <div class="w-full h-[30rem] relative overflow-hidden">
+            <div class="w-full h-[35rem] relative overflow-hidden">
 
                 <!-- Next & Previous buttons -->
                 <button data-video-carousel-btn="prev" @click="slideTo($event)" class="absolute z-10 bg-gray-100 opacity-40 border-primary rounded-full shadow-lg transition 
