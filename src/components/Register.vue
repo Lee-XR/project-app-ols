@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-center px-10 py-3 w-1/2 h-full relative dark:text-gray-200">
+    <div class="border-2 border-black flex flex-col justify-center px-10 py-3 w-1/2 h-full relative dark:text-gray-200">
         <div class="flex flex-row justify-start items-baseline relative">
 
             <!-- Back to login button -->
@@ -33,7 +33,7 @@
                 w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
                 <label class="absolute -top-3 left-4 bg-white dark:bg-gray-700 dark:text-gray-200">Password:</label>
             </div>
-            <div class=" flex flex-row justify-center text-left">
+            <div class="w-full flex flex-row justify-center text-left">
                 <div>
                 <label>D.O.B:</label>
                 <input type="date" v-model="dob" required class="border-2 border-slate-200 drop-shadow-md 
