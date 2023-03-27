@@ -187,6 +187,7 @@ export default {
 
         const picUpload = (e) => {
             profilePic.value = e.target.files[0]
+            console.log(profilePic.value.name)
         }
 
         const editProfile = async () => {
@@ -225,7 +226,7 @@ export default {
                         'userDob': userInfo.value.user_dob,
                         'userGender': userInfo.value.user_gender,
                         'userGrade': userInfo.value.user_grade,
-                        'userProfilePic': userInfo.value.user_profilePic
+                        'userProfilePic': profilePic.value.name
                     })
                     store.commit('updateUser', updatedData.value)
                     showModal.value = !showModal.value
