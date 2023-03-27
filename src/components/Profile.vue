@@ -187,7 +187,6 @@ export default {
 
         const picUpload = (e) => {
             profilePic.value = e.target.files[0]
-            console.log(profilePic.value.name)
         }
 
         const editProfile = async () => {
