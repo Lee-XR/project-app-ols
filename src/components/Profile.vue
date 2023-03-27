@@ -5,8 +5,8 @@
         enter-active-class="duration-500 delay-300 ease-in-out"
         enter-from-class="opacity-0 translate-y-10">
             <div class="col-span-1 h-80 w-1/4 rounded-[50%] overflow-hidden border-4 border-primary dark:border-secondary">
-                <img v-if="noPic" :src="process.env.VUE_APP_DEPLOY_URL + 'thumbnails/default%20profile.jpg'" alt="default profile" class="h-full w-full object-cover">
-                <img v-else :src="process.env.VUE_APP_DEPLOY_URL + userInfo.user_profilePic" alt="" class="h-full w-full object-cover">
+                <img v-if="noPic" :src="url + 'profilePics/default%20profile.jpg'" alt="default profile pic" class="h-full w-full object-cover">
+                <img v-else :src="url + 'profilePics/' + userInfo.user_profilePic" alt="user profile pic" class="h-full w-full object-cover">
             </div>
         </Transition>
 
@@ -153,6 +153,7 @@ export default {
     name: 'ProfileVue',
     components: { ModalVue },
     setup(){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const userId = ref()
         const userInfo = ref({})
         const noPic = ref()
@@ -178,7 +179,7 @@ export default {
                 'user_grade': store.state.userGrade,
                 'user_profilePic': store.state.userProfilePic
             }
-            if(store.state.userProfilePic === null){
+            if(store.state.userProfilePic === null || store.state.userProfilePic === ""){
                 noPic.value = true
             } else {
                 noPic.value = false 
@@ -249,7 +250,7 @@ export default {
             })
         }
 
-        return { userInfo, showModal, profilePic, oldPw, newPw, modalError, modalErrorMsg,
+        return { url, userInfo, showModal, profilePic, oldPw, newPw, modalError, modalErrorMsg,
                 editProfile, picUpload, noPic }
     }
 }

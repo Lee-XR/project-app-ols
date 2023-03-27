@@ -27,7 +27,7 @@ const store = createStore({
             state.userDob = payload.userInfo.userDob,
             state.userGender = payload.userInfo.userGender,
             state.userGrade = payload.userInfo.userGrade,
-            state.userProfilePic = payload.userInfo.userProfilePic
+            state.userProfilePic = payload?.userInfo?.userProfilePic || null
         },
         updateUser(state, payload){
             state.userName = payload.userName,
