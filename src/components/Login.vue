@@ -75,7 +75,7 @@ export default{
             }
             loginError.value = false
             // await axios.post('login.php', data)
-            await fetch(process.env.VUE_APP_DEPLOY_URL + '/login.php', {
+            await fetch(process.env.VUE_APP_DEPLOY_URL + 'login.php', {
                 method: "POST",
                 mode: "cors",
                 credentials: 'include',

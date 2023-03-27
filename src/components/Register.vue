@@ -119,7 +119,7 @@ export default{
                 'grade': grade.value
             }
             await axios.post('register.php', data)
-            await fetch(process.env.VUE_APP_DEPLOY_URL + '/register.php')
+            await fetch(process.env.VUE_APP_DEPLOY_URL + 'register.php')
             .then(res => { return res.json() })
             .then((response) => {
                 if(response.error === true){
