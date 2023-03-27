@@ -5,8 +5,8 @@
         enter-active-class="duration-500 delay-300 ease-in-out"
         enter-from-class="opacity-0 translate-y-10">
             <div class="col-span-1 h-80 w-1/4 rounded-[50%] overflow-hidden border-4 border-primary dark:border-secondary">
-                <img v-if="noPic" src="https://project-app-ols.000webhostapp.com/profilePics/default%20profile.jpg" alt="default profile" class="h-full w-full object-cover">
-                <img v-else :src="'https://project-app-ols.000webhostapp.com/profilePics/' + userInfo.user_profilePic" alt="" class="h-full w-full object-cover">
+                <img v-if="noPic" src="https://project-app-ols.000webhostapp.com/scripts/profilePics/default%20profile.jpg" alt="default profile" class="h-full w-full object-cover">
+                <img v-else :src="'https://project-app-ols.000webhostapp.com/scripts/profilePics/' + userInfo.user_profilePic" alt="" class="h-full w-full object-cover">
             </div>
         </Transition>
 
