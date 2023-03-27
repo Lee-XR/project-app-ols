@@ -225,9 +225,10 @@ export default {
                         'userDob': userInfo.value.user_dob,
                         'userGender': userInfo.value.user_gender,
                         'userGrade': userInfo.value.user_grade,
-                        'userProfilePic': userInfo.value.user_profilePic
+                        'userProfilePic': profilePic.value ? profilePic.value.name : store.state.userProfilePic
                     })
                     store.commit('updateUser', updatedData.value)
+                    getUserProfile()
                     showModal.value = !showModal.value
                     oldPw.value = null
                     newPw.value = null
