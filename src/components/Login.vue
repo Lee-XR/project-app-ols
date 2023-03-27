@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -74,8 +74,15 @@ export default{
                 'password': password.value
             }
             loginError.value = false
-            await axios.post('login.php', data)
+            // await axios.post('login.php', data)
+            await fetch(process.env.VUE_APP_DEPLOY_URL + '/login.php', {
+                method: "POST",
+                mode: "cors",
+                credentials: true,
+                body: JSON.stringify(data)
+            })
                 .then((response) => {
+                    console.log(response.data)
                     if(response.data.error){
                         errorMsg.value = response.data.msg
                         loginError.value = true
@@ -88,6 +95,7 @@ export default{
                     }
                 })
                 .catch((error) => {
+                    console.log(error)
                     if(error){
                         loginError.value = true
                         if(error.response){
