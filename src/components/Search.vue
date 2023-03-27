@@ -1,7 +1,6 @@
 <template>
     <div class="relative mb-24 h-[31rem] shadow-lg">
-      <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/020-B2S-Blog_2-Families-SL-v2.gif" alt="" class="w-full h-[31rem] object-cover dark:brightness-75 transition duration-100 ease-in-out">
-      <div class="absolute top-0 w-full h-full bg-gray-400 bg-opacity-30 px-48 py-7 transition duration-100 ease-in-out">
+      <div class="gif-bg w-full h-full bg-gray-400 bg-opacity-30 px-48 py-7 transition duration-100 ease-in-out">
           <div class="flex flex-col justify-center">
               <p class="text-7xl text-center dark:text-gray-100 my-3 tracking-wider"><b>Study-UP</b></p>
               <p class="text-lg text-center mt-3 mb-5 dark:text-gray-100"><b>
@@ -38,7 +37,7 @@
                 <p class="text-lg text-center text-black dark:text-gray-100 tracking-wider my-2 font-semibold">
                   <i>Not what you are looking for?</i>
                 </p>
-                <div class="flex justify-center items-center text-lg text-white w-1/4 mx-auto px-3 py-1
+                <div class="flex justify-center items-center text-lg text-white w-fit mx-auto px-3 py-1
                 bg-primary border-2 border-primary rounded-full shadow-lg transition duration-100 ease-in-out
                 hover:text-primary hover:bg-white hover:scale-x-105">
                 <router-link :to="{ name:'browse' }">
@@ -313,3 +312,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.gif-bg{
+  background: url('https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/020-B2S-Blog_2-Families-SL-v2.gif');
+  background-size: cover;
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.2);
+}
+</style>
