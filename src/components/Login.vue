@@ -78,24 +78,23 @@ export default{
             await fetch(process.env.VUE_APP_DEPLOY_URL + '/login.php', {
                 method: "POST",
                 mode: "cors",
-                credentials: true,
+                credentials: 'include',
                 body: JSON.stringify(data)
             })
+                .then(res => { return res.json() })
                 .then((response) => {
-                    console.log(response.data)
-                    if(response.data.error){
-                        errorMsg.value = response.data.msg
+                    if(response.error){
+                        errorMsg.value = response.msg
                         loginError.value = true
                         setTimeout(()=>{
                             loginError.value = false
                         }, 5000)
                     } else {
-                        store.commit('userExist', response.data)
+                        store.commit('userExist', response)
                         router.push('/')
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
                     if(error){
                         loginError.value = true
                         if(error.response){
