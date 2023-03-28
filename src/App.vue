@@ -49,17 +49,11 @@ export default {
           return Promise.reject(error)
       } else if(error.response.status === 400){
           const data = { 'userId': store.state.userId }
-          // await axios.post('refresh.php', data, {
-          //   headers:{
-          //   'withCredentials': true,
-          //      'Content-Type': 'application/x-www-form-urlencoded'
-          //  }
-          // })
-          await fetch(process.env.VUE_APP_DEPLOY_URL + 'refresh.php', {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            body: JSON.stringify(data)
+          await axios.post('refresh.php', data, {
+            headers:{
+            'withCredentials': true,
+               'Content-Type': 'application/x-www-form-urlencoded'
+           }
           })
           .catch((error) => {
             if(error){
