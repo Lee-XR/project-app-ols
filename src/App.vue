@@ -61,12 +61,6 @@ export default {
             credentials: "include",
             body: JSON.stringify(data)
           })
-          .then((res) => { return res.json() })
-          .then((response) => {
-            if(response.headers.get('Set-Cookie')){
-              return axios(originalRequest)
-            }
-          })
           .catch((error) => {
             if(error){
               store.commit('resetUser')
