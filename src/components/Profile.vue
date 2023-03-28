@@ -153,7 +153,7 @@ export default {
     name: 'ProfileVue',
     components: { ModalVue },
     setup(){
-        const url = process.env.VUE_APP_DEV_URL
+        const url = process.env.VUE_APP_DEPLOY_URL
         const userId = ref()
         const userInfo = ref({})
         const noPic = ref()

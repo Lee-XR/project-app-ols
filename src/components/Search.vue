@@ -158,7 +158,7 @@ export default {
     emits: ["scrollNext"],
     components: { ModalVue },
     setup(){
-      const url = process.env.VUE_APP_DEV_URL
+      const url = process.env.VUE_APP_DEPLOY_URL
       const search = ref(null)
       const stickySearch = ref(false)
       const resultHit = ref(false)
