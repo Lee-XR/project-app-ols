@@ -20,7 +20,7 @@
                 </label>
 
                 <!-- Result dropdown -->
-                <div v-if="search" class="absolute w-full bg-white dark:bg-gray-200 rounded-b-2xl pb-2">
+                <div v-if="search" class="absolute w-full bg-white dark:bg-gray-200 rounded-b-2xl pb-2 z-10">
                   <div v-if="resultHit" class="text-base">
                     <div @click="show(resource)" v-for="resource in resources.slice(0, 6)" :key="resource.resourceId" 
                     class="mx-1 my-1 py-1 pl-3 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-400 grid grid-cols-4">
