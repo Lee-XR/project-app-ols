@@ -55,8 +55,9 @@ export default {
             }
           })
           .then((response) => {
-            if(response.headers.get('Set-Cookie')){
-              return axios (originalRequest)
+            if(!response.headers.get('Set-Cookie')){
+              store.commit('resetUser')
+              router.push('/login')
             }
           )
           .catch((error) => {
@@ -65,7 +66,7 @@ export default {
               router.push('/login')
             }
           })
-          // return axios(originalRequest)
+          return axios(originalRequest)
       }
       return Promise.reject(error)
     })
