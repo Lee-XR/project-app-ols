@@ -73,7 +73,7 @@ export default {
               router.push('/login')
             }
           })
-          // return axios(originalRequest)
+          return axios(originalRequest)
       }
       return Promise.reject(error)
     })
