@@ -29,7 +29,7 @@
         <ModalVue :show="showModal" @click="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <img :src="url + resource.thumbnail" alt="" class="w-full h-full 
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                         object-cover object-top" />
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
