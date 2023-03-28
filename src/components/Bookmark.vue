@@ -129,7 +129,7 @@ export default {
     name: 'BookmarkVue',
     components: { ModalVue },
     setup(){
-        const url = process.env.VUE_APP_DEPLOY_URL
+        const url = process.env.VUE_APP_DEV_URL
         const showModal = ref(false)
         const resources = ref([])
         const currentTab = ref(1)

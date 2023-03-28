@@ -87,7 +87,7 @@ export default {
     name: 'searchBarVue',
     components: { ModalVue },
     setup(){
-        const url = process.env.VUE_APP_DEPLOY_URL
+        const url = process.env.VUE_APP_DEV_URL
         const search = ref()
         const resultHit = ref(false)
         const resources = ref([])

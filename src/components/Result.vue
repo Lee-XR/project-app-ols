@@ -130,7 +130,7 @@ export default {
     components: { ModalVue },
     props: ['resultOption', 'resultId'],
     setup(props){
-        const url = process.env.VUE_APP_DEPLOY_URL
+        const url = process.env.VUE_APP_DEV_URL
         const currentTab = ref()
         const showModal = ref(false)
         const resources = ref([])

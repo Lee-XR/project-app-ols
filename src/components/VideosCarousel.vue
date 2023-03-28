@@ -70,7 +70,7 @@ import { ref } from 'vue'
 export default {
     name: 'VideoCarouselVue',
     setup(){
-        const url = process.env.VUE_APP_DEPLOY_URL
+        const url = process.env.VUE_APP_DEV_URL
         const update = (btns, activeBtn, slides, activeSlide, nextSlideIndex) => {
             btns.children[nextSlideIndex].dataset.videoActive = 'active'
             activeBtn.dataset.videoActive = 'none'
