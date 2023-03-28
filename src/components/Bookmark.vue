@@ -40,7 +40,7 @@
                 hover:shadow-lg hover:border-2 hover:scale-105 hover:cursor-default dark:text-gray-200
                 dark:bg-gray-700 dark:hover:bg-gray-400 dark:hover:border-gray-200">
                     <div class="w-1/3 h-full mr-2 drop-shadow-md">
-                        <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="image" class="w-full h-full object-cover object-top dark:brightness-90">
+                        <img :src="url + 'thumbnails/' + resource.thumbnail" alt="image" class="w-full h-full object-cover object-top dark:brightness-90">
                     </div>
                     <div class="w-2/3 h-full px-1 grid grid-cols-2 gap-x-3 items-center">
                         <div class="col-start-1 col-end-3 text-xl truncate">
@@ -71,7 +71,7 @@
         <ModalVue :show="showModal" @close="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                     object-cover object-top">
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -129,6 +129,7 @@ export default {
     name: 'BookmarkVue',
     components: { ModalVue },
     setup(){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const showModal = ref(false)
         const resources = ref([])
         const currentTab = ref(1)
@@ -188,11 +189,8 @@ export default {
                 'category': category
             }
             connError.value = false
-            await axios.post('http://localhost:80/scripts/getBookmarks.php', data, {
-                withCredentials: true,
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            await axios.post('getBookmarks.php', data, {
+                headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response)=>{
                 if(response.data){
@@ -215,17 +213,17 @@ export default {
 
          // Async GET script to download resource
          const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob',
             })
             .then((response) => {
                 const isApp = response.headers.get('Content-Type')?.includes('application')
                 if(isApp){
+                    const ext = response.headers.get('Content-Type').split("/").pop()
                     const href = window.URL.createObjectURL(response.data)
                     const link = document.createElement('a')
                     link.href = href
-                    link.setAttribute('download', title)
+                    link.setAttribute('download', title + '.' + ext)
                     document.body.appendChild(link)
                     link.click()
 
@@ -266,11 +264,8 @@ export default {
                 'userId': store.state.userId,
                 'bookmarkId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true,
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            await axios.post('bookmark.php', data, {
+                headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
                 if(response.data.error === true){
@@ -320,7 +315,7 @@ export default {
             el.style.transform = 'translateY(-20px)'
         }
 
-        return { showModal, resources, show, switchTab, tabs, hits, getBookmarks, 
+        return { url, showModal, resources, show, switchTab, tabs, hits, getBookmarks, 
                 connError, resource, download, bookmark, modalError, modalErrorMsg, 
                 onBeforeEnter, onEnter, onLeave }
     },

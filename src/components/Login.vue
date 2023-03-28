@@ -1,14 +1,14 @@
 <template>
-    <div class="flex flex-col justify-center px-10 py-3 w-1/2 relative text-center dark:text-gray-200">
+    <div class="flex flex-col justify-center px-10 py-3 w-1/2 h-full relative text-center dark:text-gray-200">
         <div class="mt-5 mx-auto pb-2 w-full text-center border-b-4 border-black drop-shadow-md dark:border-gray-200">
             <h1 class="text-5xl"><b>LOGIN</b></h1>
         </div>
-        <p class="mx-auto my-5 text-center">Enter your <b>email</b> and <b>password</b> to access your account</p>
+        <p class="mx-auto my-5 text-left">Enter your <b>email</b> and <b>password</b> to access your account</p>
         
         <!-- Login input form -->
         <form action="post">
             <div class="my-4 relative">
-                <input type="text" v-model="email" required class="border-2 border-slate-200 rounded-full w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
+                <input type="email" v-model="email" required class="border-2 border-slate-200 rounded-full w-full px-3 pt-2 drop-shadow-sm focus:outline-none focus:border-primary dark:bg-gray-700">
                 <label class="absolute -top-3 left-4 px-1 bg-white dark:bg-gray-700 dark:text-gray-200">Email:</label>
             </div>
             <div class="my-4 relative">
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -74,18 +74,23 @@ export default{
                 'password': password.value
             }
             loginError.value = false
-            await axios.post('http://localhost:80/scripts/login.php', data, {
-                withCredentials:true
+            // await axios.post('login.php', data)
+            await fetch(process.env.VUE_APP_DEPLOY_URL + 'login.php', {
+                method: "POST",
+                mode: "cors",
+                credentials: 'include',
+                body: JSON.stringify(data)
             })
+                .then(res => { return res.json() })
                 .then((response) => {
-                    if(response.data.error){
-                        errorMsg.value = response.data.msg
+                    if(response.error){
+                        errorMsg.value = response.msg
                         loginError.value = true
                         setTimeout(()=>{
                             loginError.value = false
                         }, 5000)
                     } else {
-                        store.commit('userExist', response.data)
+                        store.commit('userExist', response)
                         router.push('/')
                     }
                 })

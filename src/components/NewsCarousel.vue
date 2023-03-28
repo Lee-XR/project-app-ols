@@ -8,7 +8,7 @@
 
         <!-- Carousel content -->
         <div class="mx-20 my-5">
-            <div class="w-full h-[30rem] relative overflow-hidden">
+            <div class="w-full h-[35rem] relative overflow-hidden">
 
                 <!-- Next & Previous buttons -->
                 <button data-news-carousel-btn="prev" @click="slideTo($event)" class="absolute z-10 bg-gray-100 opacity-40 border-primary rounded-full shadow-lg transition 
@@ -39,7 +39,10 @@
                     :data-news-slide="slide.id" 
                     :data-news-show="slide.id === 1 ? 'active' : 'none'" class="absolute inset-0
                     transition duration-700 delay-200 ease-in-out data-[news-show=none]:opacity-0">
-                        <img :src="slide.image" :alt="'Article ' + slide.id" referrerpolicy="no-referrer" class="w-full h-full object-cover transition duration-300 ease-in-out group-hover:brightness-75 group-hover:scale-110 dark:brightness-90">
+                        <img :src="slide.image" :alt="'Article ' + slide.id" referrerpolicy="no-referrer" class="w-full h-full 
+                        object-cover transition duration-300 ease-in-out group-hover:brightness-75 group-hover:scale-110 
+                        dark:brightness-90">
+                        <!-- Article Text Container -->
                         <div class="absolute top-0 bottom-0 right-36 my-auto px-3 py-2 w-2/5 h-fit flex flex-col justify-center
                         text-gray-600 bg-gray-700 bg-opacity-0 opacity-40 group-hover:opacity-100 group-hover:bg-opacity-50
                         group-hover:text-gray-200 group-hover:shadow-xl transition duration-300 ease-in-out
@@ -128,8 +131,14 @@ export default {
             }
         }
 
+        // New Axios instance config to fetch RSS data
+        const getNewsInstance = axios.create({
+            baseURL: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.malaymail.com%2Ffeed%2Frss%2Fmalaysia',
+            withCredentials: false,
+        })
+
         const getNews = async () => {
-            await axios.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.malaymail.com%2Ffeed%2Frss%2Fmalaysia')
+            await getNewsInstance.get('')
             .then((response) => {
                 const items = response.data.items
                 for (const i in items){

@@ -30,7 +30,7 @@
         <ModalVue :show="showModal" @close="showModal = false">
           <div class="w-full h-full">
             <div class="w-full h-2/5">
-                <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                 object-cover object-top">
             </div>
             <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -68,7 +68,7 @@
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                    <p>Bookmark</p>
+                    <p>Add Bookmark</p>
                 </button>
             </div>
         </div>
@@ -87,6 +87,7 @@ export default {
     name: 'searchBarVue',
     components: { ModalVue },
     setup(){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const search = ref()
         const resultHit = ref(false)
         const resources = ref([])
@@ -97,37 +98,32 @@ export default {
         const store = useStore()
         const router = useRouter()
 
-        const getSearch = async (keywords) => {
-        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
-          withCredentials: true,
-          headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-        })
-        .then((response)=>{
-          resources.value = []
-          if(response.data.resources.length > 0){
-            const resource = response.data.resources
-            for(const i in resource){
-              resources.value.push(resource[i])
-            }
-            resultHit.value = true
-          } else {
-            resultHit.value = false
-          }
-        })
-        .catch((error) => {
-            if(error.response.status === 401){
-                router.push('/login')
-            }
-        })
-      }
+watch(search, (keywords) => {
+    if(search.value){
+    getSearch(keywords)
+    }
+})
 
-      watch(search, (keywords)=>{
-        if(search.value){
-          getSearch(keywords)
+const getSearch = async (keywords) => {
+    await axios.get('search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
+        headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then((response) => {
+        resources.value = []
+        if(response.data.resources.length > 0){
+        const resource = response.data.resources
+        for(const i in resource){
+            resources.value.push(resource[i])
         }
-      })
+        resultHit.value = true
+        } else {
+        resultHit.value = false
+        }
+    }).catch((error) => {
+        if(error.response.status === 401){
+            router.push('/login')
+        }
+    })
+}
 
       const show = (selected) => {
         resource.value = selected
@@ -136,17 +132,17 @@ export default {
 
       // Async GET script to download resource
       const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob'
             })
             .then((response) => {
                 const isApp = response.headers.get('Content-Type')?.includes('application')
                 if(isApp){
+                    const ext = response.headers.get('Content-Type').split("/").pop()
                     const href = window.URL.createObjectURL(response.data)
                     const link = document.createElement('a')
                     link.href = href
-                    link.setAttribute('download', title)
+                    link.setAttribute('download', title + '.' + ext)
                     document.body.appendChild(link)
                     link.click()
 
@@ -187,11 +183,8 @@ export default {
                 'userId': store.state.userId,
                 'resourceId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true,
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            await axios.post('bookmark.php', data, {
+                headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
                 if(response.data.error){
@@ -217,7 +210,7 @@ export default {
             })
         }
 
-        return { search, resultHit, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
+        return { url, search, resultHit, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
     },
 }
 </script>

@@ -44,17 +44,17 @@
   import { useStore } from 'vuex';
 
   export default {
-      name: 'ProfileView',
-      components: { HeaderVue, FooterVue, searchBarVue, ProfileVue, BookmarkVue, ScrollTopBtn },
+    name: 'ProfileView',
+    components: { HeaderVue, FooterVue, searchBarVue, ProfileVue, BookmarkVue, ScrollTopBtn },
     setup(){
       const router = useRouter()
       const store = useStore()
 
       onMounted(() => {
-      if(store.state.userId === null){
-        router.push('/login')
-      }
-    })
+        if(store.state.userId === null){
+          router.push('/login')
+        }
+      })
     }
   }
   </script>

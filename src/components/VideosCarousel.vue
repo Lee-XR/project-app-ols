@@ -6,7 +6,7 @@
         </div>
         <!-- Carousel content -->
         <div class="mx-20 my-5">
-            <div class="w-full h-[30rem] relative overflow-hidden">
+            <div class="w-full h-[35rem] relative overflow-hidden">
 
                 <!-- Next & Previous buttons -->
                 <button data-video-carousel-btn="prev" @click="slideTo($event)" class="absolute z-10 bg-gray-100 opacity-40 border-primary rounded-full shadow-lg transition 
@@ -36,7 +36,7 @@
                     <li v-for="slide in videosSlides" :key="slide.id" :data-video-slide="slide.id" 
                     :data-video-show="slide.id === 1 ? 'active' : 'none'" class="absolute inset-0 
                     transition duration-700 ease-in-out delay-200 data-[video-show=none]:opacity-0">
-                        <img :src="require('@/assets/thumbnails/' + slide.image)" alt="" class="w-full h-full object-cover transition duration-300 ease-in-out group-hover:brightness-75 group-hover:scale-110 dark:brightness-90">
+                        <img :src="url + 'thumbnails/' + slide.image" alt="" class="w-full h-full object-cover transition duration-300 ease-in-out group-hover:brightness-75 group-hover:scale-110 dark:brightness-90">
                         <div class="absolute top-0 bottom-0 right-36 my-auto px-3 py-2 w-2/5 h-fit flex flex-col justify-center
                         text-gray-600 bg-gray-700 bg-opacity-0 opacity-40 group-hover:opacity-100 group-hover:bg-opacity-50
                         group-hover:text-gray-200 group-hover:shadow-xl transition duration-300 ease-in-out
@@ -70,7 +70,7 @@ import { ref } from 'vue'
 export default {
     name: 'VideoCarouselVue',
     setup(){
-
+        const url = process.env.VUE_APP_DEPLOY_URL
         const update = (btns, activeBtn, slides, activeSlide, nextSlideIndex) => {
             btns.children[nextSlideIndex].dataset.videoActive = 'active'
             activeBtn.dataset.videoActive = 'none'
@@ -150,7 +150,7 @@ export default {
             },
         ])
 
-        return { slideTo, goTo, videosSlides }
+        return { url, slideTo, goTo, videosSlides }
     },
     mounted(){
         const firstBtn = ref(document.querySelector('[data-video-btn="1"]'))

@@ -37,6 +37,7 @@ export default {
     const router = useRouter()
     const store = useStore()
 
+    // Interceptor to redirect unauthorised users to login page
     axios.interceptors.response.use((response) => {
       return response
     },
@@ -48,11 +49,17 @@ export default {
           return Promise.reject(error)
       } else if(error.response.status === 400){
           const data = { 'userId': store.state.userId }
-          await axios.post('http://localhost:80/scripts/refresh.php', data, {
-            withCredentials: true,
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+          // await axios.post('refresh.php', data, {
+          //   headers:{
+          //   'withCredentials': true,
+          //      'Content-Type': 'application/x-www-form-urlencoded'
+          //  }
+          // })
+          await fetch(process.env.VUE_APP_DEPLOY_URL + 'refresh.php', {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify(data)
           })
           .catch((error) => {
             if(error){

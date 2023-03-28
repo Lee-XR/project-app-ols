@@ -1,14 +1,10 @@
 <template>
     <div class="relative mb-24 h-[31rem] shadow-lg">
-      <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/020-B2S-Blog_2-Families-SL-v2.gif" alt="" class="w-full h-[31rem] object-cover dark:brightness-75 transition duration-100 ease-in-out">
-      <div class="absolute top-0 w-full h-full bg-gray-400 bg-opacity-30 px-48 py-7 transition duration-100 ease-in-out">
+      <div class="gif-bg w-full h-full bg-gray-400 bg-opacity-30 px-48 py-7 transition duration-100 ease-in-out">
           <div class="flex flex-col justify-center">
-              <p class="text-7xl text-center dark:text-gray-800 my-3 tracking-wider"><b>Study-UP</b></p>
-              <p class="text-lg text-center mt-3 mb-10 text-primary"><b>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. Nam tristique enim elit, ut lacinia elit gravida nec. Suspendisse vehicula odio ut enim
-                  pharetra maximus. Nam pretium egestas nibh eget tincidunt. Nulla mi nunc, commodo non laoreet quis,
-                  lobortis at massa. Mauris tellus nulla, placerat at nulla non.
+              <p class="text-7xl text-center dark:text-gray-100 my-3 tracking-wider"><b>Study-UP</b></p>
+              <p class="text-lg text-center mt-3 mb-5 dark:text-gray-100"><b>
+                  Enhance your academic learning experience with Study-UP, an online library system web platform for Malaysian students. Looking for a specific topic to complete your homework or assignment? Just use the search bar below... Or browse for more interesting resources through our page. Are you ready to acheive academic excellence with Study-UP?
               </b></p>
 
               <!-- Search bar -->
@@ -24,7 +20,7 @@
                 </label>
 
                 <!-- Result dropdown -->
-                <div v-if="search" class="absolute w-full bg-white dark:bg-gray-200 rounded-b-2xl pb-2">
+                <div v-if="search" class="absolute w-full bg-white dark:bg-gray-200 rounded-b-2xl pb-2 z-10">
                   <div v-if="resultHit" class="text-base">
                     <div @click="show(resource)" v-for="resource in resources.slice(0, 6)" :key="resource.resourceId" 
                     class="mx-1 my-1 py-1 pl-3 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-400 grid grid-cols-4">
@@ -38,10 +34,10 @@
               </div>
 
               <div class="my-3 mx-auto w-full">
-                <p class="text-lg text-center text-gray-100 dark:text-gray-200 tracking-wider my-2 font-semibold">
+                <p class="text-lg text-center text-black dark:text-gray-100 tracking-wider my-2 font-semibold">
                   <i>Not what you are looking for?</i>
                 </p>
-                <div class="flex justify-center items-center text-lg text-white w-1/4 mx-auto px-3 py-1
+                <div class="flex justify-center items-center text-lg text-white w-fit mx-auto px-3 py-1
                 bg-primary border-2 border-primary rounded-full shadow-lg transition duration-100 ease-in-out
                 hover:text-primary hover:bg-white hover:scale-x-105">
                 <router-link :to="{ name:'browse' }">
@@ -53,12 +49,14 @@
           </div>
 
           <!-- Bouncing down button -->
-        <div class="absolute -bottom-6 left-0 right-0 text-center animate-bounce">
-          <button @click="$emit('scrollNext')" class="w-12 h-12 rounded-full bg-primary border-2 border-primary transition
-          duration-150 ease-in-out text-white hover:text-primary hover:bg-white hover:scale-105">
-            <font-awesome-icon icon="fa-solid fa-down-long" class="mx-auto w-8 h-8 hover:scale-105" />
-          </button>
-        </div>
+          <div class="absolute -bottom-6 left-0 right-0 text-center animate-bounce">
+            <button @click="$emit('scrollNext')" class="w-12 h-12 rounded-full bg-primary 
+            border-2 border-primary transition duration-150 ease-in-out text-white 
+            hover:text-primary hover:bg-white hover:scale-105">
+              <font-awesome-icon icon="fa-solid fa-down-long" class="mx-auto w-8 h-8 
+              hover:scale-105" />
+            </button>
+          </div>
 
       </div>
     </div>
@@ -101,7 +99,7 @@
         <ModalVue :show="showModal" @close="showModal = false">
           <div class="w-full h-full">
             <div class="w-full h-2/5">
-                <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
+                <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
                 object-cover object-top">
             </div>
             <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
@@ -129,7 +127,7 @@
                       <b>{{ modalErrorMsg }}</b>
                   </div>
               </Transition>  
-              <button @click="download(resource.resourceId)" class="text-white flex justify-center items-center border-primary border-2 
+              <button @click="download(resource.resourceId, resource.title)" class="text-white flex justify-center items-center border-primary border-2 
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-download" class="h-5 w-5 mr-2"/>
@@ -139,7 +137,7 @@
                 rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                 hover:bg-white hover:scale-110">
                     <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                    <p>Bookmark</p>
+                    <p>Add Bookmark</p>
                 </button>
             </div>
           </div>
@@ -160,6 +158,7 @@ export default {
     emits: ["scrollNext"],
     components: { ModalVue },
     setup(){
+      const url = process.env.VUE_APP_DEPLOY_URL
       const search = ref(null)
       const stickySearch = ref(false)
       const resultHit = ref(false)
@@ -171,13 +170,17 @@ export default {
       const store = useStore()
       const router = useRouter()
 
+      watch(search, (keywords)=>{
+        if(search.value){
+          getSearch(keywords)
+        }
+      })
+
       // Async GET script to fetch search results
       const getSearch = async (keywords) => {
-        await axios.get('http://localhost:80/scripts/search.php?keywords=' + keywords + '&userId=' + store.state.userId, {
-          withCredentials: true,
-          headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+        await axios.get('search.php?keywords=' + keywords 
+                        + '&userId=' + store.state.userId, {
+          headers:{ 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .then((response)=>{
           resources.value = []
@@ -192,17 +195,9 @@ export default {
           }
         })
         .catch((error) => {
-          if(error.response.status === 401){
-            router.push('/login')
-          }
+          if(error.response.status === 401) router.push('/login')
         })
       }
-
-      watch(search, (keywords)=>{
-        if(search.value){
-          getSearch(keywords)
-        }
-      })
 
       const show = (selected) => {
         resource.value = selected
@@ -211,34 +206,35 @@ export default {
 
       // Async GET script to download resource
       const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id + '&userId=' + store.state.userId, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob'
             })
             .then((response) => {
-                const isApp = response.headers.get('Content-Type')?.includes('application')
-                if(isApp){
-                    const href = window.URL.createObjectURL(response.data)
-                    const link = document.createElement('a')
-                    link.href = href
-                    link.setAttribute('download', title)
-                    document.body.appendChild(link)
-                    link.click()
+              const isApp = response.headers.get('Content-Type')?.includes('application')
+              if(isApp){
+                const ext = response.headers.get('Content-Type').split("/").pop()
+                const href = window.URL.createObjectURL(response.data)
+                const link = document.createElement('a')
+                link.href = href
+                link.target = '_blank'
+                link.setAttribute('download', title + '.' + ext)
+                document.body.appendChild(link)
+                link.click()
 
-                    document.body.removeChild(link)
-                    URL.revokeObjectURL(href)
-                } else {
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                        const result = JSON.parse(reader.result)
-                        modalError.value = result.error
-                        modalErrorMsg.value = result.msg
-                    }
-                    reader.readAsText(response.data)
-                    setTimeout(() => {
-                        modalError.value = !modalError.value
-                    }, 5000)
+                document.body.removeChild(link)
+                URL.revokeObjectURL(href)
+              } else {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    const result = JSON.parse(reader.result)
+                    modalError.value = result.error
+                    modalErrorMsg.value = result.msg
                 }
+                reader.readAsText(response.data)
+                setTimeout(() => {
+                    modalError.value = !modalError.value
+                }, 5000)
+              }
             })
             .catch((error) => {
                 modalError.value = true
@@ -262,8 +258,7 @@ export default {
                 'userId': store.state.userId,
                 'resourceId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true,
+            await axios.post('/bookmark.php', data, {
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -292,7 +287,7 @@ export default {
             })
         }
 
-      return { search, stickySearch, resultHit, getSearch, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
+      return { url, search, stickySearch, resultHit, getSearch, resources, resource, showModal, show, download, bookmark, modalError, modalErrorMsg }
     },
     mounted(){
       const sBar = document.querySelector("#searchBar")
@@ -302,6 +297,7 @@ export default {
         rootMargin: '-80px 0px 0px 0px',
         threshold: [1]
       }
+
       const observer1 = new IntersectionObserver(([entry]) => {
         if(entry.isIntersecting){
             this.stickySearch = false
@@ -317,3 +313,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.gif-bg{
+  background: url('https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/020-B2S-Blog_2-Families-SL-v2.gif');
+  background-size: cover;
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.2);
+}
+</style>

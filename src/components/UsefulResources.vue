@@ -13,7 +13,7 @@
             hover:shadow-2xl hover:border-2 hover:bg-white dark:bg-gray-500 
             dark:hover:bg-gray-400 dark:border-gray-200">
                 <div class="h-2/3 drop-shadow-lg">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="image" class="h-full w-full object-cover object-top dark:brightness-90">
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="image" class="h-full w-full object-cover object-top dark:brightness-90">
                 </div>
                 <div class="h-1/3 mt-1 p-2 flex flex-col justify-center">
                     <h2 class="text-2xl w-full leading-tight text-center font-semibold dark:text-gray-200">
@@ -29,8 +29,8 @@
         <ModalVue :show="showModal" @click="showModal = false">
             <div class="w-full h-full">
                 <div class="w-full h-2/5">
-                    <img :src="require('@/assets/thumbnails/' + resource.thumbnail)" alt="" class="w-full h-full 
-                    object-cover object-top">
+                    <img :src="url + 'thumbnails/' + resource.thumbnail" alt="" class="w-full h-full 
+                        object-cover object-top" />
                 </div>
                 <div class="text-2xl line-clamp-2 m-px"><b>{{ resource.title }}</b></div>
                 <div class="text-lg mt-1 mb-2">
@@ -66,7 +66,7 @@
                     rounded-full px-2 py-1 ml-5 bg-primary transition duration-200 ease-in-out hover:text-primary 
                     hover:bg-white hover:scale-110">
                         <font-awesome-icon icon="fa-solid fa-bookmark" class="h-5 w-5 mr-2"/>
-                        <p>Bookmark</p>
+                        <p>Add Bookmark</p>
                     </button>
                 </div>
             </div>
@@ -84,6 +84,7 @@ export default {
     name: 'UsefulResourcesVue',
     components: { ModalVue },
     setup(){
+        const url = process.env.VUE_APP_DEPLOY_URL
         const showModal = ref(false)
         const resource = ref()
         const modalError = ref(false)
@@ -98,17 +99,17 @@ export default {
 
         // Async GET script to download resource
         const download = async (id, title) => {
-            await axios.get('http://localhost:80/scripts/download.php?id='+ id, {
-                withCredentials: true,
+            await axios.get('download.php?id='+ id + '&userId=' + store.state.userId, {
                 responseType: 'blob'
             })
             .then((response) => {
                 const isApp = response.headers.get('Content-Type')?.includes('application')
                 if(isApp){
+                    const ext = response.headers.get('Content-Type').split("/").pop()
                     const href = window.URL.createObjectURL(response.data)
                     const link = document.createElement('a')
                     link.href = href
-                    link.setAttribute('download', title)
+                    link.setAttribute('download', title + '.' + ext)
                     document.body.appendChild(link)
                     link.click()
 
@@ -149,11 +150,11 @@ export default {
                 'userId': store.state.userId,
                 'resourceId': id
             }
-            await axios.post('http://localhost:80/scripts/bookmark.php', data, {
-                withCredentials: true
+            await axios.post('bookmark.php', data, {
+                headers:{ 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then((response) => {
-                if(response.data.error){
+                if(response.data.error == true){
                     modalError.value = true
                     modalErrorMsg.value = response.data.errorMsg
                     setTimeout(() => {
@@ -245,7 +246,7 @@ export default {
             }
         ])
 
-        return { showModal, show, resource, resources, download, bookmark, modalError, modalErrorMsg }
+        return { url, showModal, show, resource, resources, download, bookmark, modalError, modalErrorMsg }
     }
 }
 </script>

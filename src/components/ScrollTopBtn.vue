@@ -14,7 +14,7 @@ export default {
     name: 'ScrollTopBtnVue',
     setup(){
         const scrollToTop = () => {
-        gsap.to(window, {duration: 0.8, scrollTo: {y: 0}, ease: 'power2'})
+            gsap.to(window, {duration: 0.8, scrollTo: {y: 0}, ease: 'power2'})
         }
 
         return { scrollToTop }
