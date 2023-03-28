@@ -51,6 +51,7 @@ export default {
           const data = { 'userId': store.state.userId }
           await axios.post('refresh.php', data, {
             headers:{
+                'withCredentials': true,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
           })
