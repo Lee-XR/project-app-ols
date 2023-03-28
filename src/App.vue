@@ -49,8 +49,7 @@ export default {
           return Promise.reject(error)
       } else if(error.response.status === 400){
           const data = { 'userId': store.state.userId }
-          await axios.post('http://localhost:80/scripts/refresh.php', data, {
-            withCredentials: true,
+          await axios.post(process.env.VUE_APP_DEPLOY_URL + '/refresh.php', data, {
             headers:{
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
