@@ -59,7 +59,7 @@ export default {
           await fetch(process.env.VUE_APP_DEPLOY_URL + 'refresh.php', {
             method: "POST",
             mode: "cors",
-            credentials: true,
+            credentials: "include",
             body: JSON.stringify(data)
           })
           .catch((error) => {

@@ -122,7 +122,7 @@ export default{
             await fetch(process.env.VUE_APP_DEPLOY_URL + 'register.php', {
                 method: "POST",
                 mode: "cors",
-                credentials: true,
+                credentials: "include",
                 body: JSON.stringify(data)
             })
             .then(res => { return res.json() })
