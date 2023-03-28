@@ -55,18 +55,17 @@ export default {
             }
           })
           .then((response) => {
-            if(!response.headers.get('Set-Cookie')){
-              store.commit('resetUser')
-              router.push('/login')
+            if(response.headers.get('Set-Cookie')){
+              return axios(originalRequest)
             }
-          )
+          })
           .catch((error) => {
             if(error){
               store.commit('resetUser')
               router.push('/login')
             }
           })
-          return axios(originalRequest)
+          // return axios(originalRequest)
       }
       return Promise.reject(error)
     })
