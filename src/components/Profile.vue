@@ -166,7 +166,7 @@ export default {
         const store = useStore()
 
         onMounted(() => {
-            getUserProfile()
+            if(store.state.userId !== null) { getUserProfile() }
         })
 
         const getUserProfile = () => {
