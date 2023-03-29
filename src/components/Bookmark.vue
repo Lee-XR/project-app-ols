@@ -145,7 +145,7 @@ export default {
             const tabs = document.querySelector('[data-tabs]')
             tabs.children[0].dataset.active = 'active'
             currentTab.value = 1
-            if(store.state.userId !== null) { getBookmarks(currentTab) }
+            if(store.state.userId !== null) { getBookmarks(currentTab.value) }
         })
 
         const show = (selected) => {
