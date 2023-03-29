@@ -120,7 +120,7 @@
 <script>
 import ModalVue from './Modal.vue';
 import axios from 'axios';
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import gsap from 'gsap';
@@ -140,6 +140,13 @@ export default {
         const modalErrorMsg = ref()
         const store = useStore()
         const router = useRouter()
+
+        onMounted(() => {
+            const tabs = document.querySelector('[data-tabs]')
+            tabs.children[0].dataset.active = 'active'
+            currentTab.value = 1
+            if(store.state.userId !== null) { getBookmarks(currentTab.value) }
+        })
 
         const show = (selected) => {
             showModal.value = true
@@ -319,12 +326,6 @@ export default {
                 connError, resource, download, bookmark, modalError, modalErrorMsg, 
                 onBeforeEnter, onEnter, onLeave }
     },
-    mounted(){
-        const tabs = ref(document.querySelector('[data-tabs]'))
-        tabs.value.children[0].dataset.active = 'active'
-        this.currentTab = 1
-        this.getBookmarks(this.currentTab)
-    }
 }
 </script>
 
