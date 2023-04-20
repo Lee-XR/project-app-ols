@@ -119,16 +119,15 @@ export default{
                 'grade': grade.value
             }
             await axios.post('register.php', data)
-            .then(res => { return res.json() })
             .then((response) => {
-                if(response.error === true){
-                    errorMsg.value = response.msg
+                if(response.data.error === true){
+                    errorMsg.value = response.data.msg
                     registerError.value = true
                     setTimeout(()=>{
                         registerError.value = false
                     }, 5000)
-                } else if(response.error === false) {
-                    store.commit('userExist', response)
+                } else if(response.data.error === false) {
+                    store.commit('userExist', response.data)
                     router.push('/')
                 }
             })

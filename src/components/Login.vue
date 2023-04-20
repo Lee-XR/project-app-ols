@@ -75,16 +75,15 @@ export default{
             }
             loginError.value = false
             await axios.post('login.php', data)
-                .then(res => { return res.json() })
                 .then((response) => {
-                    if(response.error){
-                        errorMsg.value = response.msg
+                    if(response.data.error){
+                        errorMsg.value = response.data.msg
                         loginError.value = true
                         setTimeout(()=>{
                             loginError.value = false
                         }, 5000)
                     } else {
-                        store.commit('userExist', response)
+                        store.commit('userExist', response.data)
                         router.push('/')
                     }
                 })
